@@ -50,10 +50,10 @@ function loadLastQuote() {
     const quote = JSON.parse(lastQuote);
     quoteDisplay.innerHTML = `
       <p>"${quote.text}"</p>
-      <small>Category: ${quote.category}</small>
+      <small>Category: ${quote.category}</small>`
     
   }
-
+}
 
 // -------- ADD QUOTE --------
 function addQuote() {
