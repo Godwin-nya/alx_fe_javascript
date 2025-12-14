@@ -95,6 +95,20 @@ function createAddQuoteForm() {
   document.body.appendChild(formDiv);
 }
 
+function exportToJson() {
+  const jsonData = JSON.stringify(quotes, null, 2);
+  const blob = new Blob([jsonData], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "quotes.json";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+
 // -------- JSON IMPORT --------
 function importFromJsonFile(event) {
   const fileReader = new FileReader();
