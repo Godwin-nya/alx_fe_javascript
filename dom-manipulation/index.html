@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Quote Generator</title>
+  </head>
+  <body>
+    <h1>Dynamic Quote Generator</h1>
+    <div id="quoteDisplay"></div>
+    <button id="newQuote">Show New Quote</button>
+
+    <div>
+      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+      <input
+        id="newQuoteCategory"
+        type="text"
+        placeholder="Enter quote category"
+      />
+      <button onclick="addQuote()">Add Quote</button>
+    </div>
+
+    <!-- INLINE SCRIPT  -->
+    <script>
+      const quotes = [
+        {
+          text: "The best way to predict the future is to invent it.",
+          category: "Inspiration",
+        },
+        {
+          text: "Life is 10% what happens to us and 90% how we react to it.",
+          category: "Motivation",
+        },
+        {
+          text: "An unexamined life is not worth living.",
+          category: "Philosophy",
+        },
+        {
+          text: "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+          category: "Individuality",
+        },
+      ];
+
+      const quoteDisplay = document.getElementById("quoteDisplay");
+      const newQuoteBtn = document.getElementById("newQuote");
+
+      function showRandomQuote() {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const quote = quotes[randomIndex];
+
+        quoteDisplay.innerHTML = `
+          <p>"${quote.text}"</p>
+          <small>Category: ${quote.category}</small>
+        `;
+      }
+
+      newQuoteBtn.addEventListener("click", showRandomQuote);
+
+      function addQuote() {
+        const quoteText = document.getElementById("newQuoteText").value;
+        const quoteCategory = document.getElementById("newQuoteCategory").value;
+
+        if (quoteText === "" || quoteCategory === "") {
+          alert("Please enter both quote and category");
+          return;
+        }
+
+        quotes.push({
+          text: quoteText,
+          category: quoteCategory,
+        });
+
+        document.getElementById("newQuoteText").value = "";
+        document.getElementById("newQuoteCategory").value = "";
+
+        alert("Quote added successfully!");
+      }
+    </script>
+  </body>
+</html>
