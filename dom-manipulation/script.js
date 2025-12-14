@@ -51,9 +51,9 @@ function loadLastQuote() {
     quoteDisplay.innerHTML = `
       <p>"${quote.text}"</p>
       <small>Category: ${quote.category}</small>
-    `;
+    
   }
-}
+
 
 // -------- ADD QUOTE --------
 function addQuote() {
@@ -185,3 +185,71 @@ populateCategories();
 loadLastQuote();
 createAddQuoteForm();
 filterQuotes();
+
+const SERVER_URL = "https://jsonplaceholder.typicode.com/posts";
+
+//fetch data
+async function fetchServerQuotes(){
+    try{
+        const response = await fetch(SERVER_URL);
+        const data = await response.json();
+
+        //map data to quotes
+        const serverQuotes = data.map(item => ({
+            text: item.title,
+            category: "Server"
+        }));
+
+        return serverQuotes;
+    }catch(error){
+        console.error("Error fetching server quotes:", error);
+        return [];
+    }   
+}
+
+// Load server quotes and merge with local quotes
+async function syncWithServer() {
+  const serverQuotes = await fetchServerQuotes();
+
+  // Merge logic: server data takes precedence
+  const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+
+  // Find quotes that are not on the server yet
+  const newLocalQuotes = localQuotes.filter(
+    local => !serverQuotes.some(server => server.text === local.text)
+  );
+
+  // Merge server + new local quotes
+  const mergedQuotes = [...serverQuotes, ...newLocalQuotes];
+
+  // Save merged quotes locally
+  localStorage.setItem("quotes", JSON.stringify(mergedQuotes));
+  quotes = mergedQuotes; // update in-memory array
+
+  // Notify user if updates occurred
+  if (serverQuotes.length > 0) {
+    alert("Quotes updated from server!");
+  }
+
+  // Refresh category dropdown and display
+  populateCategories();
+  showRandomQuote();
+}
+
+setInterval(syncWithServer, 60000);
+
+function notifyUser(message) {
+  const notification = document.getElementById("syncNotification");
+  notification.textContent = message;
+  notification.style.display = "block";
+
+  // Hide after 3 seconds
+  setTimeout(() => {
+    notification.style.display = "none";
+  }, 3000);
+}
+
+notifyUser("Quotes updated from server!");
+
+populateCategories();
+showRandomQuote();
