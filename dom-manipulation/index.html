@@ -75,6 +75,30 @@
 
         alert("Quote added successfully!");
       }
+
+      function createAddQuoteForm() {
+        const formDiv = document.createElement("div");
+
+        const quoteInput = document.createElement("input");
+        quoteInput.id = "newQuoteText";
+        quoteInput.placeholder = "Enter a new quote";
+
+        const categoryInput = document.createElement("input");
+        categoryInput.id = "newQuoteCategory";
+        categoryInput.placeholder = "Enter quote category";
+
+        const addBtn = document.createElement("button");
+        addBtn.textContent = "Add Quote";
+
+        addBtn.addEventListener("click", addQuote);
+
+        formDiv.appendChild(quoteInput);
+        formDiv.appendChild(categoryInput);
+        formDiv.appendChild(addBtn);
+
+        document.body.appendChild(formDiv);
+      }
+      createAddQuoteForm();
     </script>
   </body>
 </html>
