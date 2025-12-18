@@ -208,7 +208,7 @@ async function fetchQuotesFromServer(){
 }
 
 // Load server quotes and merge with local quotes
-async function syncWithServer() {
+async function syncQuotes() {
   const serverQuotes = await fetchQuotesFromServer();
 
   // Merge logic: server data takes precedence
@@ -236,7 +236,7 @@ async function syncWithServer() {
   showRandomQuote();
 }
 
-setInterval(syncWithServer, 60000);
+setInterval(syncQuotes, 60000);
 
 function notifyUser(message) {
   const notification = document.getElementById("syncNotification");
