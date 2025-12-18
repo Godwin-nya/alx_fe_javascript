@@ -266,7 +266,7 @@ async function postQuoteToServer(quote) {
     });
 
     const data = await response.json();
-    console.log("Quote posted to server:", data);
+    console.log("Quote synced with server:", data);
   } catch (error) {
     console.error("Error posting quote to server:", error);
   }
