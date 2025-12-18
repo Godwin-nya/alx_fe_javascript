@@ -189,7 +189,7 @@ filterQuotes();
 const SERVER_URL = "https://jsonplaceholder.typicode.com/posts";
 
 //fetch data
-async function fetchQuotesfromServer(){
+async function fetchQuotesFromServer(){
     try{
         const response = await fetch(SERVER_URL);
         const data = await response.json();
@@ -209,7 +209,7 @@ async function fetchQuotesfromServer(){
 
 // Load server quotes and merge with local quotes
 async function syncWithServer() {
-  const serverQuotes = await fetchQuotesfromServer();
+  const serverQuotes = await fetchQuotesFromServer();
 
   // Merge logic: server data takes precedence
   const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
