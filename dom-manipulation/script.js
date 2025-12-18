@@ -253,3 +253,21 @@ notifyUser("Quotes updated from server!");
 
 populateCategories();
 showRandomQuote();
+
+
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch(SERVER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(quote)
+    });
+
+    const data = await response.json();
+    console.log("Quote posted to server:", data);
+  } catch (error) {
+    console.error("Error posting quote to server:", error);
+  }
+}
